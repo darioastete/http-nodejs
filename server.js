@@ -8,15 +8,15 @@ app.use('/styles.css', express.static(`${__dirname}/public/styles.css`));
 //   res.send('Hello World!');
 // });
 
-app.get('/', async (req, res) => {
-    let query = `select * from log_orden_compra`;
-    axios.post(url,{anio:query})
-    .then(({data}) => {
-        return res.status(200).jsonp(data);
-    }).catch((err) => {
-        return res.status(500).jsonp(err);
-    });
-});
+// app.get('/', async (req, res) => {
+//     let query = `select * from log_orden_compra`;
+//     axios.post(url,{anio:query})
+//     .then(({data}) => {
+//         return res.status(200).jsonp(data);
+//     }).catch((err) => {
+//         return res.status(500).jsonp(err);
+//     });
+// });
 
 app.get('/', async (req, res) => {
     let query = `select *, DATE_FORMAT(fecha_limite, '%d-%m-%Y') AS formatted_fechalimite, DATE_FORMAT(created_at, '%d-%m-%Y') AS fecha_subida
@@ -105,6 +105,7 @@ app.get('/cotizaciones/:id', async (req, res) => {
     // });
 });
 
-app.listen(80, () => {
-  console.log('Backend listening on port 3000!');
+let port = 80;
+app.listen(port, () => {
+  console.log(`Backend listening on port ${port}!`);
 });
