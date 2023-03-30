@@ -18,7 +18,7 @@ app.get('/', async (req, res) => {
     });
 });
 
-app.get('/index', async (req, res) => {
+app.get('/', async (req, res) => {
     let query = `select *, DATE_FORMAT(fecha_limite, '%d-%m-%Y') AS formatted_fechalimite, DATE_FORMAT(created_at, '%d-%m-%Y') AS fecha_subida
     from pub_contrataciones_bienes_servicios 
     where year(created_at)=2023
@@ -105,6 +105,6 @@ app.get('/cotizaciones/:id', async (req, res) => {
     // });
 });
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(80, () => {
   console.log('Backend listening on port 3000!');
 });
