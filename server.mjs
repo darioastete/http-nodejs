@@ -1,22 +1,18 @@
-const express = require('express');
-const axios = require('axios').default;
+import express from 'express';
+import axios from 'axios';
+import path from 'path';
+import http from 'http';
+import { fileURLToPath } from 'url';
 const app = express();
-app.set('view engine', 'pug');
-const url = 'https://sbhuancayo.website/api/getpublicacionesbyanio';
-app.use('/styles.css', express.static(`${__dirname}/public/styles.css`));
-// app.get('/', (req, res) => {
-//   res.send('Hello World!');
-// });
+const server = http.createServer(app);
 
-// app.get('/', async (req, res) => {
-//     let query = `select * from log_orden_compra`;
-//     axios.post(url,{anio:query})
-//     .then(({data}) => {
-//         return res.status(200).jsonp(data);
-//     }).catch((err) => {
-//         return res.status(500).jsonp(err);
-//     });
-// });
+const url = 'https://sbhuancayo.website/api/getpublicacionesbyanio';
+app.set('view engine', 'pug');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// app.use('/styles.css', express.static(path.join(__dirname, '/public')));
+app.use('/styles.css', express.static(path.join(__dirname, 'public/styles.css')));
+
 
 app.get('/', async (req, res) => {
     let query = `select *, DATE_FORMAT(fecha_limite, '%d-%m-%Y') AS formatted_fechalimite, DATE_FORMAT(created_at, '%d-%m-%Y') AS fecha_subida
@@ -36,7 +32,6 @@ app.get('/', async (req, res) => {
             data
         } 
         res.render('index',result);
-        // return res.status(200).jsonp(data);
     }).catch((err) => {
         return res.status(500).jsonp(err);
     });
@@ -87,25 +82,10 @@ app.get('/cotizaciones/:id', async (req, res) => {
     }).catch((err) => {
         return res.status(500).jsonp(err);
     });
-    // res.render('pages/cotizaciones',result);
-    // let query = `select * from log_solicitud_cotizacion
-    // where numero=${req.params.id}
-    // and anio = 2023
-    // `;
-    // axios.post(url,{anio:query})
-    // .then(({data}) => {
-    //     let result = {
-    //         title: 'COTIZACIONES', 
-    //         message: 'COTIZACIONES',
-    //         data
-    //     } 
-    //     res.render('pages/cotizaciones',result);
-    // }).catch((err) => {
-    //     return res.status(500).jsonp(err);
-    // });
+
 });
 
-let port = 80;
-app.listen(port, () => {
-  console.log(`Backend listening on port ${port}!`);
+let port = process.env.PORT || 80;
+server.listen(port, () => {
+  console.log(`Server listening on port ${port}!`);
 });
