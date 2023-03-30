@@ -1,0 +1,58 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+th {
+  background-color: #dddddd;
+  font-weight: bold;
+}
+
+.row-green {
+  background-color: green;
+}
+
+.row-proceso {
+  background-color: yellow;
+}
+
+.row-desierto {
+  background-color: white;
+}
+
+.row-culminado {
+  background-color: green;
+  color: white;
+}
+
+.row-ampliacion {
+  background-color: #ffbb00;
+  color: white;
+}
+
+.row-anulado {
+  background-color: red;
+  color: white;
+}
+
+
+.cuadroabierto {
+  color: green;
+  font-weight: bold;
+}
+
+.cuadrocerrado {
+  color: red;
+  font-weight: bold;
+}
+
+.title {
+  text-align: center;
+}

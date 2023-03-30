@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/styles.css')
+  body
+    h1= message
+    table.table_principal
+        thead
+            tr
+                th Numero
+                th Objeto
+                th Fecha Subida
+                th Fecha Límite
+                th Estado
+        tbody
+            each val in data 
+                tr(class=(val.estado === 'EN PROCESO' ? 'row-proceso' : (val.estado === 'CULMINADO' ? 'row-culminado' : (val.estado === 'DESIERTO' ? 'row-desierto' : (val.estado === 'AMPLIACION' ? 'row-ampliacion' : (val.estado === 'ANULADO' ? 'row-anulado' : '' ))) )))
+                    td=val.numero
+                    td=val.objeto
+                    td=val.fecha_subida
+                    td=val.formatted_fechalimite
+                    td=val.estado

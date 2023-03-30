@@ -1,0 +1,53 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/styles.css')
+  body
+    div.title
+        h1 COTIZACION N° #{data.cotizacion.numero}
+        if data.propuestas[0].estado_cuadro === 'F'
+            h3.cuadroabierto ABIERTO
+        else 
+            h3.cuadrocerrado CERRADO
+    table.table_principal
+        thead
+            tr
+                th(colspan="3")
+                each propuestas in data.propuestas
+                    th(colspan="4")=propuestas.razon_social
+            tr
+                th(rowspan="2") cantidad
+                th(rowspan="2") Unidad
+                th(rowspan="2") nombre_producto
+                each propuestas in data.propuestas
+                    th marca
+                    th observacion
+                    th unit
+                    th total
+                
+        tbody
+            each producto in data.cc 
+                tr 
+                    each p in producto
+                        td= p
+        tfood
+            tr
+                td(colspan="3")
+                each propuestas in data.propuestas
+                    td(colspan="4")='TOTAL:'+propuestas.total
+            tr
+                td(colspan="3")
+                each propuestas in data.propuestas
+                    td(colspan="4")='PLAZO ENTREGA:'+propuestas.p_entrega
+            tr
+                td(colspan="3")
+                each propuestas in data.propuestas
+                    td(colspan="4")='FORMA DE PAGO:'+propuestas.f_pago
+            tr
+                td(colspan="3")
+                each propuestas in data.propuestas
+                    td(colspan="4")='SUBIDA: '+propuestas.subida
+
+
+                    
