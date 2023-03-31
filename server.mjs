@@ -63,7 +63,11 @@ const getPropuestas = ( id )=>{
 
 app.get('/cotizaciones/:id', async (req, res) => {
     let cotizacion = await getCotizacion(req.params.id);
-    let propuestas = await getPropuestas(cotizacion[0].id);
+    if (cotizacion.length > 0) {
+        let propuestas = await getPropuestas(cotizacion[0].id);
+    } else {
+        let propuestas = [];
+    }
     
     let query = `call cuadro_compartivo(${cotizacion[0].id})`;
     axios.post(url,{anio:query})
