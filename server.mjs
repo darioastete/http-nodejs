@@ -63,29 +63,48 @@ const getPropuestas = ( id )=>{
 
 app.get('/cotizaciones/:id', async (req, res) => {
     let cotizacion = await getCotizacion(req.params.id);
+
     if (cotizacion.length > 0) {
-        let propuestas = await getPropuestas(cotizacion[0].id);
+         
     } else {
-        let propuestas = [];
+
     }
     
-    let query = `call cuadro_compartivo(${cotizacion[0].id})`;
-    axios.post(url,{anio:query})
-    .then(({data}) => {
+    if (cotizacion.length > 0) {
+        let propuestas = await getPropuestas(cotizacion[0].id);
+        let query = `call cuadro_compartivo(${cotizacion[0].id})`;
+        axios.post(url,{anio:query})
+        .then(({data}) => {
+            let result = {
+                title: 'COTIZACIONES', 
+                message: 'COTIZACIONES',
+                data : {
+                    propuestas,
+                    cc: data,
+                    cotizacion: cotizacion[0]
+                }
+            } 
+            console.log(propuestas);
+            res.render('pages/cotizaciones',result);
+        }).catch((err) => {
+            return res.status(500).jsonp(err);
+        });
+    } else {
+        let propuestas = [];
         let result = {
             title: 'COTIZACIONES', 
             message: 'COTIZACIONES',
             data : {
                 propuestas,
-                cc: data,
-                cotizacion: cotizacion[0]
+                cc: [],
+                cotizacion: []
             }
         } 
         console.log(propuestas);
         res.render('pages/cotizaciones',result);
-    }).catch((err) => {
-        return res.status(500).jsonp(err);
-    });
+    }
+    
+    
 
 });
 
