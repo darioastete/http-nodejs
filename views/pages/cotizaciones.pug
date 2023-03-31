@@ -6,10 +6,11 @@ html
   body
     div.title
         h1 COTIZACION N° #{data.cotizacion.numero}
-        if data.propuestas[0].estado_cuadro === 'F'
-            h3.cuadroabierto ABIERTO
-        else 
-            h3.cuadrocerrado CERRADO
+        if data.propuestas.length > 0
+            if data.propuestas[0].estado_cuadro === 'F'
+                h3.cuadroabierto ABIERTO
+            else 
+                h3.cuadrocerrado CERRADO
     table.table_principal
         thead
             tr
