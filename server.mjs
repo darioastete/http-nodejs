@@ -55,6 +55,7 @@ const getPropuestas = ( id )=>{
     inner join log_proveedo e on p.idproveedor = e.id  
     inner join log_cuadro_comparativo c on p.id_cuadro_comparativo = c.id 
     where c.id_solicitud_cotizacion = ${id}
+    order by p.idproveedor
     `;
     return axios.post(url,{anio:query})
     .then(({ data }) => data)
