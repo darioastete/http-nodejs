@@ -15,13 +15,14 @@ app.use('/styles.css', express.static(path.join(__dirname, 'public/styles.css'))
 
 
 app.get('/', async (req, res) => {
-    let query = `select *, DATE_FORMAT(fecha_limite, '%d-%m-%Y') AS formatted_fechalimite, DATE_FORMAT(created_at, '%d-%m-%Y') AS fecha_subida
-    from pub_contrataciones_bienes_servicios 
-    where year(created_at)=2023
+    let query = `select c.*, DATE_FORMAT(fecha_limite, '%d-%m-%Y') AS formatted_fechalimite, DATE_FORMAT(c.created_at, '%d-%m-%Y') AS fecha_subida, l.numero as n_cotizacion
+    from pub_contrataciones_bienes_servicios c
+    inner join log_solicitud_cotizacion l on c.idsol_cot = l.id
+    where year(c.created_at)=2023
     and tipo_contratacion='B'
     and objeto NOT LIKE '%medicament%'
     and objeto NOT LIKE '%clinica%'
-    and created_at BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND DATE_ADD(NOW(), INTERVAL 1 MONTH)
+    and c.created_at BETWEEN DATE_SUB(NOW(), INTERVAL 1 MONTH) AND DATE_ADD(NOW(), INTERVAL 1 MONTH)
     order by fecha_limite desc
     `;
     axios.post(url,{anio:query})
@@ -62,7 +63,7 @@ const getPropuestas = ( id )=>{
     .catch(err => err);
 } 
 
-app.get('/cotizaciones/:id', async (req, res) => {
+app.get('/:id', async (req, res) => {
     let cotizacion = await getCotizacion(req.params.id);
 
     if (cotizacion.length > 0) {

@@ -1,23 +1,34 @@
 doctype html
 html
   head
-    title= title
+    title='Solicitudes de Cotizacion'
     link(rel='stylesheet', href='/styles.css')
   body
-    h1= message
+    //- h1= message
     table.table_principal
         thead
             tr
-                th Numero
+                th N°
+                th S.C.
                 th Objeto
                 th Fecha Subida
                 th Fecha Límite
                 th Estado
+                th S.C.
+                th T.C.
+                th C.C.
         tbody
             each val in data 
                 tr(class=(val.estado === 'EN PROCESO' ? 'row-proceso' : (val.estado === 'CULMINADO' ? 'row-culminado' : (val.estado === 'DESIERTO' ? 'row-desierto' : (val.estado === 'AMPLIACION' ? 'row-ampliacion' : (val.estado === 'ANULADO' ? 'row-anulado' : '' ))) )))
                     td=val.numero
+                    td=val.n_cotizacion
                     td=val.objeto
                     td=val.fecha_subida
                     td=val.formatted_fechalimite
                     td=val.estado
+                    td
+                      a(href="https://sbhuancayo.website/storage/publicaciones/sc/" + val.solicitud_cotizacion target="_blank") Link
+                    td
+                      a(href="https://sbhuancayo.website/storage/publicaciones/f2/" + val.formato2 target="_blank") Link
+                    td
+                      a(href="http://localhost/" + val.n_cotizacion target="_blank") Link
